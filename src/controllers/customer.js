@@ -9,6 +9,24 @@ async function getAllCustomers(req, res) {
   }
 }
 
+async function getAllNames(req, res) {
+  try {
+    const customer = await customerServices.getAllNames();
+    return res.status(200).json({ Customers: customer });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
+async function getCustomerDetails(req, res) {
+  try {
+    const customer = await customerServices.getCustomerDetail(req.body.name);
+    return res.status(200).json({ Customers: customer });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
 async function createCustomerData(req, res) {
   try {
     const customer = await customerServices.createCustomerData({
@@ -34,4 +52,6 @@ module.exports = {
   getAllCustomers,
   createCustomerData,
   deleteCustomer,
+  getAllNames,
+  getCustomerDetails,
 };

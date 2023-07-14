@@ -21,6 +21,31 @@ function getAllCustomers() {
   });
 }
 
+function getAllNames() {
+  return new Promise((resolve, reject) => {
+    pool.query(customerQueries.getAllCustomerNames, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+}
+
+function getCustomerDetail(name) {
+  return new Promise((resolve, reject) => {
+    pool.query(customerQueries.getACustomerDetail, [name], (error, results) => {
+      if (results.rowCount === 0) {
+        reject({ message: "Customer does not exist" });
+      }
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+}
+
 function createCustomerData(data) {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -40,15 +65,20 @@ function deleteCustomer(id) {
   return new Promise((resolve, reject) => {
     pool.query(customerQueries.deleteCustomer, [id], (error, results) => {
       if (results.rowCount === 0) {
-        reject({ message: "Customer not available" });
+        reject({ message: "Customer does not exist" });
       }
       if (error) {
         reject(error);
       }
-      console.log("line 46 in services", results);
       resolve({ message: "Customer Deleted" });
     });
   });
 }
 
-module.exports = { getAllCustomers, createCustomerData, deleteCustomer };
+module.exports = {
+  getAllCustomers,
+  createCustomerData,
+  deleteCustomer,
+  getAllNames,
+  getCustomerDetail,
+};
