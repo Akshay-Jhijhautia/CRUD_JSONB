@@ -46,6 +46,24 @@ function getCustomerDetail(name) {
   });
 }
 
+function getIdSubmittedByUser(name) {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      customerQueries.idsSubmittedByCustomer,
+      [name],
+      (error, results) => {
+        if (results.rowCount === 0) {
+          reject({ message: "No Id Submitted by the user" });
+        }
+        if (error) {
+          reject(error);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+}
+
 function createCustomerData(data) {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -81,4 +99,5 @@ module.exports = {
   deleteCustomer,
   getAllNames,
   getCustomerDetail,
+  getIdSubmittedByUser,
 };

@@ -27,6 +27,15 @@ async function getCustomerDetails(req, res) {
   }
 }
 
+async function getCustomerId(req, res) {
+  try {
+    const details = await customerServices.getIdSubmittedByUser(req.body.name);
+    return res.status(200).json({ "Details Submitted": details });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
 async function createCustomerData(req, res) {
   try {
     const customer = await customerServices.createCustomerData({
@@ -54,4 +63,5 @@ module.exports = {
   deleteCustomer,
   getAllNames,
   getCustomerDetails,
+  getCustomerId,
 };
