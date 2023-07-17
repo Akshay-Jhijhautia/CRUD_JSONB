@@ -79,6 +79,26 @@ function createCustomerData(data) {
   });
 }
 
+function updateCustomerPhoneNumber(data) {
+  console.log(data);
+  return new Promise((resolve, reject) => {
+    pool.query(
+      customerQueries.updatePhoneNumber,
+      [data.phoneNumber, data.name],
+      (error, results) => {
+        // if (results.rowCount === 0) {
+        //   reject({ message: "Customer does not exist" });
+        // }
+        if (error) {
+          console.log(error);
+          reject(error);
+        }
+        resolve({ message: "Customer Phone Number Updated" });
+      }
+    );
+  });
+}
+
 function deleteCustomer(id) {
   return new Promise((resolve, reject) => {
     pool.query(customerQueries.deleteCustomer, [id], (error, results) => {
@@ -100,4 +120,5 @@ module.exports = {
   getAllNames,
   getCustomerDetail,
   getIdSubmittedByUser,
+  updateCustomerPhoneNumber,
 };

@@ -48,6 +48,18 @@ async function createCustomerData(req, res) {
   }
 }
 
+async function updateCustomerPhoneNumber(req, res) {
+  try {
+    const customer = await customerServices.updateCustomerPhoneNumber({
+      phoneNumber: req.body.phoneNumber,
+      name: req.body.name,
+    });
+    return res.status(200).json({ Customers: customer });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
 async function deleteCustomer(req, res) {
   try {
     const customer = await customerServices.deleteCustomer(req.params.id);
@@ -64,4 +76,5 @@ module.exports = {
   getAllNames,
   getCustomerDetails,
   getCustomerId,
+  updateCustomerPhoneNumber,
 };

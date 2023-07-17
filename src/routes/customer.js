@@ -10,6 +10,11 @@ router.post("/customerDetail", customerController.getCustomerDetails);
 router.post("/createCustomer", customerController.createCustomerData);
 router.post("/customerId", customerController.getCustomerId);
 
+router.patch(
+  "/updatePhoneNumber",
+  customerController.updateCustomerPhoneNumber
+);
+
 router.delete("/deleteCustomer/:id", customerController.deleteCustomer);
 
 module.exports = router;
